@@ -31,7 +31,23 @@ const getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
+// Get single products in to the database
+const getSingleProducts = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const result = await BookServices.getSingleProductsIntoDb(productId);
+    res.status(200).json({
+      message: 'Books retrieved successfully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const BookControllers = {
   createProducts,
   getAllProducts,
+  getSingleProducts,
 };

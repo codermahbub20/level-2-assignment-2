@@ -13,7 +13,15 @@ const getAllProductsInToDb = async () => {
   return result;
 };
 
+// Get Specific id wise data into the database
+
+const getSingleProductsIntoDb = async (_id: string) => {
+  const result = BookModel.findOne({ _id });
+  return result;
+};
+
 export const BookServices = {
   createProductsInToDb,
   getAllProductsInToDb,
+  getSingleProductsIntoDb,
 };

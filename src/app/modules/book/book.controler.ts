@@ -1,15 +1,29 @@
 import { Request, Response } from 'express';
-import { StudentServices } from './book.service';
+import { BookServices } from './book.service';
 
 const createProducts = async (req: Request, res: Response) => {
   try {
     // received response data from clients
     const { book } = req.body;
     // send the data in services function to save this data in mongodb
-    const result = await StudentServices.createProductsInToDb(book);
+    const result = await BookServices.createProductsInToDb(book);
     res.status(200).json({
-      success: true,
       message: 'Book created successfully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Get all products in to the database
+const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const result = await BookServices.getAllProductsInToDb();
+    res.status(200).json({
+      message: 'Books retrieved successfully',
+      success: true,
       data: result,
     });
   } catch (error) {
@@ -19,4 +33,5 @@ const createProducts = async (req: Request, res: Response) => {
 
 export const BookControllers = {
   createProducts,
+  getAllProducts,
 };

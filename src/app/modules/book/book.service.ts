@@ -6,6 +6,14 @@ const createProductsInToDb = async (book: Book) => {
   return result;
 };
 
-export const StudentServices = {
+// get all products in database
+
+const getAllProductsInToDb = async () => {
+  const result = await BookModel.find();
+  return result;
+};
+
+export const BookServices = {
   createProductsInToDb,
+  getAllProductsInToDb,
 };

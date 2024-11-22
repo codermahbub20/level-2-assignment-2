@@ -20,8 +20,16 @@ const getSingleProductsIntoDb = async (_id: string) => {
   return result;
 };
 
+// Get updated  data into the database
+
+const getUpdatedProductIntoDb = async (_id: string, data: Book) => {
+  const result = BookModel.findByIdAndUpdate({ _id }, data);
+  return result;
+};
+
 export const BookServices = {
   createProductsInToDb,
   getAllProductsInToDb,
   getSingleProductsIntoDb,
+  getUpdatedProductIntoDb,
 };

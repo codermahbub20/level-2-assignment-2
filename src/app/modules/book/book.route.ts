@@ -9,4 +9,6 @@ router.get('/products', BookControllers.getAllProducts);
 
 router.get('/products/:productId', BookControllers.getSingleProducts);
 
+router.put('/products/:productId', BookControllers.getUpdatedProduct);
+
 export const BookRoutes = router;

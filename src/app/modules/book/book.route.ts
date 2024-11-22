@@ -11,4 +11,6 @@ router.get('/products/:productId', BookControllers.getSingleProducts);
 
 router.put('/products/:productId', BookControllers.getUpdatedProduct);
 
+router.delete('/products/:productId', BookControllers.deleteSingleProducts);
+
 export const BookRoutes = router;

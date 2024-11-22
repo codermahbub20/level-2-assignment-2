@@ -27,9 +27,17 @@ const getUpdatedProductIntoDb = async (_id: string, data: Book) => {
   return result;
 };
 
+// delete products using id   data into the database
+
+const deleteProductIntoDb = async (_id: string) => {
+  const result = BookModel.findByIdAndDelete({ _id });
+  return result;
+};
+
 export const BookServices = {
   createProductsInToDb,
   getAllProductsInToDb,
   getSingleProductsIntoDb,
   getUpdatedProductIntoDb,
+  deleteProductIntoDb,
 };

@@ -62,9 +62,25 @@ const getUpdatedProduct = async (req: Request, res: Response) => {
   }
 };
 
+// delete single products in to the database
+const deleteSingleProducts = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const result = await BookServices.deleteProductIntoDb(productId);
+    res.status(200).json({
+      message: 'Book deleted successfully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const BookControllers = {
   createProducts,
   getAllProducts,
   getSingleProducts,
   getUpdatedProduct,
+  deleteSingleProducts,
 };

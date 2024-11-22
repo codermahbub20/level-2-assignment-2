@@ -31,6 +31,14 @@ const bookSchema = new Schema<Book>({
     type: Boolean,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-export const BookModel = model<Book>('Student', bookSchema);
+export const BookModel = model<Book>('Book', bookSchema);

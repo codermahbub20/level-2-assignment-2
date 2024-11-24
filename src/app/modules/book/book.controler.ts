@@ -24,14 +24,19 @@ const createProducts = async (req: Request, res: Response) => {
 // Get all products in to the database
 const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const result = await BookServices.getAllProductsInToDb();
+    const searchItem = req.query.searchItem as string;
+    const result = await BookServices.getAllProductsInToDb(searchItem);
     res.status(200).json({
       message: 'Books retrieved successfully',
       success: true,
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({
+      message: 'Failed to retrieve books',
+      status: false,
+      error: error,
+    });
   }
 };
 

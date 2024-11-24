@@ -8,8 +8,14 @@ const createProductsInToDb = async (book: Book) => {
 
 // get all products in database
 
-const getAllProductsInToDb = async () => {
-  const result = await BookModel.find();
+const getAllProductsInToDb = async (searchItem: string) => {
+  const result = await BookModel.find({
+    $or: [
+      { title: { $regex: searchItem, $options: 'i' } },
+      { author: { $regex: searchItem, $options: 'i' } },
+      { category: { $regex: searchItem, $options: 'i' } },
+    ],
+  });
   return result;
 };
 

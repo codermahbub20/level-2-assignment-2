@@ -28,8 +28,12 @@ const getSingleProductsIntoDb = async (_id: string) => {
 
 // Get updated  data into the database
 
-const getUpdatedProductIntoDb = async (_id: string, data: Book) => {
-  const result = BookModel.findByIdAndUpdate({ _id }, data);
+const getUpdatedProductIntoDb = async (_id: string, data: Partial<Book>) => {
+  const result = BookModel.findByIdAndUpdate(
+    _id,
+    { $set: data },
+    { new: true },
+  ).exec();
   return result;
 };
 

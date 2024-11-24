@@ -45,6 +45,12 @@ const getSingleProducts = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const result = await BookServices.getSingleProductsIntoDb(productId);
+    if (!result) {
+      return res.status(404).json({
+        message: 'Book not found',
+        success: false,
+      });
+    }
     res.status(200).json({
       message: 'Books retrieved successfully',
       success: true,

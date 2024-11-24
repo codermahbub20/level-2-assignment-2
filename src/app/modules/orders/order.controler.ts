@@ -7,6 +7,12 @@ const createOrder = async (req: Request, res: Response) => {
     const { order } = req.body;
     // send the data in services function to save this data in mongodb
     const result = await OrderServices.createOrderInToDb(order);
+    if (!result) {
+      return res.status(404).json({
+        message: 'Order not found',
+        success: false,
+      });
+    }
     res.status(200).json({
       message: 'Order created successfully',
       success: true,

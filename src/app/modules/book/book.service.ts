@@ -8,15 +8,29 @@ const createProductsInToDb = async (book: Book) => {
 
 // get all products in database
 
-const getAllProductsInToDb = async (searchItem: string) => {
-  const result = await BookModel.find({
-    $or: [
-      { title: { $regex: searchItem, $options: 'i' } },
-      { author: { $regex: searchItem, $options: 'i' } },
-      { category: { $regex: searchItem, $options: 'i' } },
-    ],
-  });
-  return result;
+const getAllProductsInToDb = async (searchTerm: string) => {
+  try {
+    let query = {};
+
+    if (searchTerm) {
+      const regex = new RegExp(searchTerm, 'i');
+      query = {
+        $or: [
+          { title: { $regex: regex } },
+          { author: { $regex: regex } },
+          { category: { $regex: regex } },
+        ],
+      };
+    }
+    const result = await BookModel.find(query);
+    if (result.length === 0) {
+      throw new Error('No Book matched your search criteria.');
+    }
+    return result;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    throw new Error(`Error fetching Book: ${error.message}`);
+  }
 };
 
 // Get Specific id wise data into the database

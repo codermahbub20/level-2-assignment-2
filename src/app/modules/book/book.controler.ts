@@ -24,24 +24,29 @@ const createProducts = async (req: Request, res: Response) => {
 // Get all products in to the database
 const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const searchItem = req.query.searchItem as string;
-    const result = await BookServices.getAllProductsInToDb(searchItem);
+    const { searchTerm } = req.query;
+    // Pass the searchTerm to the service
+    const result = await BookServices.getAllProductsInToDb(
+      searchTerm as string,
+    );
+
     res.status(200).json({
-      message: 'Books retrieved successfully',
       success: true,
+      message: 'Books retrieved successfully',
       data: result,
     });
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
     res.status(500).json({
-      message: 'Failed to retrieve books',
-      status: false,
-      error: error,
+      success: false,
+      message: 'Something went wrong',
+      data: err.message,
     });
   }
 };
 
 // Get single products in to the database
- 
+
 const getSingleProducts = async (
   req: Request,
   res: Response,

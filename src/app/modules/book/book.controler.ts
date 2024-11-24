@@ -13,7 +13,11 @@ const createProducts = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({
+      message: 'Validation failed',
+      success: false,
+      error: error,
+    });
   }
 };
 

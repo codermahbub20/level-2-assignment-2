@@ -20,7 +20,7 @@ const createOrder = async (req: Request, res: Response) => {
 // Revenue
 const getTotalRevenue = async (req: Request, res: Response) => {
   try {
-    const totalRevenue = await OrderServices.calculateTotalRevenue();
+    const totalRevenue = await OrderServices.calculateTotalRevenueInToDb();
     res.status(200).json({
       message: 'Total revenue calculated successfully',
       status: true,

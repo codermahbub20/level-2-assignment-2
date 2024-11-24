@@ -4,32 +4,38 @@ import { Book } from './book.interface';
 const bookSchema = new Schema<Book>({
   title: {
     type: String,
-    required: true,
+    required: [true, 'Title is required'],
   },
   author: {
     type: String,
-    required: true,
+    required: [true, 'Author is required'],
   },
   price: {
     type: Number,
-    required: true,
+    required: [true, 'Price is required'],
+    min: [0, 'Price must be a positive number'],
   },
   category: {
     type: String,
-    enum: ['Fiction', 'Science', 'SelfDevelopment', 'Poetry', 'Religious'],
-    required: true,
+    enum: {
+      values: ['Fiction', 'Science', 'SelfDevelopment', 'Poetry', 'Religious'],
+      message:
+        'Category must be one of Fiction, Science, SelfDevelopment, Poetry, or Religious',
+    },
+    required: [true, 'Category is required'],
   },
   description: {
     type: String,
-    required: true,
+    required: [true, 'Description is required'],
   },
   quantity: {
     type: Number,
-    required: true,
+    required: [true, 'Quantity is required'],
+    min: [0, 'Quantity must be a non-negative number'],
   },
   inStock: {
     type: Boolean,
-    required: true,
+    required: [true, 'InStock status is required'],
   },
   createdAt: {
     type: Date,

@@ -8,7 +8,7 @@ const createOrderInToDb = async (order: Order) => {
 
 //  Calculate Total Revenue
 
-const calculateTotalRevenue = async (): Promise<number> => {
+const calculateTotalRevenueInToDb = async (): Promise<number> => {
   const result = await OrderModel.aggregate([
     {
       $lookup: {
@@ -46,5 +46,5 @@ const calculateTotalRevenue = async (): Promise<number> => {
 
 export const OrderServices = {
   createOrderInToDb,
-  calculateTotalRevenue,
+  calculateTotalRevenueInToDb,
 };

@@ -43,14 +43,12 @@ orderSchema.pre('validate', async function (next) {
   try {
     const product = await BookModel.findById(order.product);
     if (!product) {
-      return next(new Error('Product not found'));
+      throw new Error('Product not found');
     }
 
     if (product.quantity < order.quantity) {
-      return next(
-        new Error(
-          `Insufficient product quantity. Available: ${product.quantity}, Requested: ${order.quantity}`,
-        ),
+      throw new Error(
+        `Insufficient product quantity. Available: ${product.quantity}, Requested: ${order.quantity}`,
       );
     }
     // Calculate total price based on product price
@@ -59,7 +57,7 @@ orderSchema.pre('validate', async function (next) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     const formattedError = {
-      message: 'Failed to update product stock after saving the order.',
+      message: 'Failed to Order creation ',
       success: false,
       error: error.message,
       stack: error.stack,

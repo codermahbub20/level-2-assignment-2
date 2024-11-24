@@ -13,7 +13,21 @@ const createOrder = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    let errorResponse;
+    if (error instanceof Error) {
+      try {
+        errorResponse = JSON.parse(error.message);
+      } catch {
+        errorResponse = {
+          message: 'An unexpected error occurred.',
+          success: false,
+          error: error.message,
+          stack: error.stack,
+        };
+      }
+    }
+
+    res.status(400).json(errorResponse);
   }
 };
 
@@ -26,6 +40,7 @@ const getTotalRevenue = async (req: Request, res: Response) => {
       status: true,
       data: { totalRevenue },
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       message: 'Failed to calculate total revenue',

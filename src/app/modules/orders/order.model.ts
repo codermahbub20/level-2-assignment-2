@@ -1,6 +1,7 @@
 import mongoose, { model, Schema } from 'mongoose';
 import { Order } from './order.interface';
 import { BookModel } from '../book/book.model';
+import { NextFunction } from 'express';
 
 const orderSchema = new Schema<Order>({
   email: {
@@ -67,7 +68,8 @@ orderSchema.pre('validate', async function (next) {
 });
 
 // Post-save hook to update product stock
-orderSchema.post('save', async function (doc, next) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+orderSchema.post('save', async function (doc: any, next: NextFunction) {
   try {
     const product = await BookModel.findById(doc.product);
     if (product) {

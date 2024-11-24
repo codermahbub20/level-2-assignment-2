@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { BookServices } from './book.service';
 
 const createProducts = async (req: Request, res: Response) => {
@@ -41,7 +41,13 @@ const getAllProducts = async (req: Request, res: Response) => {
 };
 
 // Get single products in to the database
-const getSingleProducts = async (req: Request, res: Response) => {
+ 
+const getSingleProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> => {
   try {
     const { productId } = req.params;
     const result = await BookServices.getSingleProductsIntoDb(productId);
@@ -56,6 +62,7 @@ const getSingleProducts = async (req: Request, res: Response) => {
       success: true,
       data: result,
     });
+    next();
   } catch (error) {
     console.log(error);
   }

@@ -1,7 +1,12 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { OrderServices } from './order.services';
 
-const createOrder = async (req: Request, res: Response) => {
+const createOrder = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> => {
   try {
     // received response data from clients
     const { order } = req.body;
@@ -18,6 +23,7 @@ const createOrder = async (req: Request, res: Response) => {
       success: true,
       data: result,
     });
+    next();
   } catch (error) {
     let errorResponse;
     if (error instanceof Error) {

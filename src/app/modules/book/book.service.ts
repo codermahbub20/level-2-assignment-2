@@ -36,14 +36,14 @@ const getAllProductsInToDb = async (searchTerm: string) => {
 // Get Specific id wise data into the database
 
 const getSingleProductsIntoDb = async (_id: string) => {
-  const result = BookModel.findOne({ _id });
+  const result = await BookModel.findOne({ _id }); // Await the promise here
   return result;
 };
 
 // Get updated  data into the database
 
 const getUpdatedProductIntoDb = async (_id: string, data: Partial<Book>) => {
-  const result = BookModel.findByIdAndUpdate(
+  const result = await BookModel.findByIdAndUpdate(
     _id,
     { $set: data },
     { new: true },

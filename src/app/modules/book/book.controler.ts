@@ -1,10 +1,11 @@
-import { NextFunction, Request, Response } from 'express';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Request, Response } from 'express';
 import { BookServices } from './book.service';
 
 const createProducts = async (req: Request, res: Response) => {
   try {
     // received response data from clients
-    const { book } = req.body;
+    const book = req.body;
     // send the data in services function to save this data in mongodb
     const result = await BookServices.createProductsInToDb(book);
     res.status(200).json({
@@ -47,36 +48,34 @@ const getAllProducts = async (req: Request, res: Response) => {
 
 // Get single products in to the database
 
-const getSingleProducts = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<any> => {
+const getSingleProducts = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { productId } = req.params;
+    const productId = req.params.productId; // Make sure this matches the route parameter
     const result = await BookServices.getSingleProductsIntoDb(productId);
     if (!result) {
       return res.status(404).json({
-        message: 'Book not found',
         success: false,
+        message: 'Book not found',
       });
     }
     res.status(200).json({
-      message: 'Books retrieved successfully',
       success: true,
+      message: 'Book retrieved successfully',
       data: result,
     });
-    next();
-  } catch (error) {
-    console.log(error);
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+      error: err.message,
+    });
   }
 };
 
 // Get updated products in to the database
 const getUpdatedProduct = async (req: Request, res: Response) => {
   try {
-    const { productId } = req.params;
+    const productId = req.params.productId;
     const data = req.body;
     const result = await BookServices.getUpdatedProductIntoDb(productId, data);
     res.status(200).json({

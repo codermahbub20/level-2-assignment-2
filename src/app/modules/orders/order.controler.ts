@@ -9,7 +9,7 @@ const createOrder = async (
 ): Promise<any> => {
   try {
     // received response data from clients
-    const { order } = req.body;
+    const order = req.body;
     // send the data in services function to save this data in mongodb
     const result = await OrderServices.createOrderInToDb(order);
     if (!result) {
@@ -18,6 +18,7 @@ const createOrder = async (
         success: false,
       });
     }
+
     res.status(200).json({
       message: 'Order created successfully',
       success: true,
